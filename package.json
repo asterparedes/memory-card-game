@@ -1,0 +1,21 @@
+{
+  "name": "memory-card-game",
+  "version": "1.0.0",
+  "description": "WDD330 Final Project",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asterparedes/memory-card-game.git"
+  },
+  "author": "Aster Paredes Morales <par23028@byui.edu>",
+  "bugs": {
+    "url": "https://github.com/asterparedes/memory-card-game/issues"
+  },
+  "homepage": "https://github.com/asterparedes/memory-card-game#readme",
+  "dependencies": {
+    "parcel": "^2.12.0"
+  }
+}
