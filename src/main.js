@@ -1,6 +1,3 @@
-// TODO pokemon memory card game
+import App from "./App";
 
-const messageNode = document.createElement("h1");
-messageNode.textContent = "Welcome to Pokemon Memory Card Game";
-
-document.getElementById("root").appendChild(messageNode);
+document.getElementById("root").appendChild(App());

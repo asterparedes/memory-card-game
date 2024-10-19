@@ -1,5 +1,50 @@
-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+:root {
+    --font-text: "Protest Strike", sans-serif;
+    /* Colors */
+    --primary-color: #FFC300;
+    --secondary--color:  #220901;
+    --accent-color: #FFD60A;
+    /* Sizes */
+    --font-base: 18px;
+    --small-font: 0.6em;
+    --large-font: 1.5em;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-size: var(--font-base);
+}
+
+body {
+    font-size: var(--large-font);
+  font-family: var(--font-text);
+  background-color: var(--primary-color);
+  min-width: 350px;
+  margin: 0;
+}
+
+header {
+    display: block;
+}
+.app-title {
+    text-align: center;
+    font-size: var(--large-font);
+    color: var(--secondary--color);
+    margin: 0;
+}
+
+p {
+    margin-top: 10px;
+    text-align: center;
+    font-size: var(--small-font);
+}
+
+h2 {
+    font-size: var(--font-base);
+}
+
+
