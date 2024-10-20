@@ -1,3 +1,6 @@
 import App from "./App";
 
-document.getElementById("root").appendChild(App());
+(async () => {
+  const appElement = await App();
+  document.getElementById("root").appendChild(appElement);
+})();

@@ -1,13 +1,13 @@
 :root {
-    --font-text: "Protest Strike", sans-serif;
-    /* Colors */
-    --primary-color: #FFC300;
-    --secondary--color:  #220901;
-    --accent-color: #FFD60A;
-    /* Sizes */
-    --font-base: 18px;
-    --small-font: 0.6em;
-    --large-font: 1.5em;
+  --font-text: "Protest Strike", sans-serif;
+  /* Colors */
+  --primary-color: #ffc300;
+  --secondary--color: #220901;
+  --accent-color: #ffd60a;
+  /* Sizes */
+  --font-base: 18px;
+  --small-font: 0.8em;
+  --large-font: 1.5em;
 }
 
 * {
@@ -16,35 +16,79 @@
 
 html {
   height: 100%;
-  font-size: var(--font-base);
+  line-height: 1.5;
 }
 
 body {
-    font-size: var(--large-font);
   font-family: var(--font-text);
-  background-color: var(--primary-color);
+  font-size: var(--font-base);
+  background-color: var(--secondary--color);
   min-width: 350px;
   margin: 0;
+  padding: 0;
 }
 
-header {
-    display: block;
-}
 .app-title {
-    text-align: center;
-    font-size: var(--large-font);
-    color: var(--secondary--color);
-    margin: 0;
+  font-size: var(--large-font);
+  font-family: var(--font-text);
+  color: var(--primary-color);
+  margin-top: 20px;
+  text-align: center;
 }
 
-p {
-    margin-top: 10px;
-    text-align: center;
-    font-size: var(--small-font);
+.app-instruction {
+  text-align: center;
+  font-size: var(--small-font);
+  color: var(--primary-color);
 }
 
-h2 {
-    font-size: var(--font-base);
+.score {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
+.current-score,
+.high-score {
+  font-size: var(--small-font);
+  color: var(--primary-color);
+}
 
+.card-container {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(4, 275px);
+  gap: 10px;
+  margin: 20px;
+}
+
+.pokemon-card {
+  border: 1px solid var(--accent-color);
+  border-radius: 10px;
+  max-width: 100%;
+  background-color: var(--primary-color);
+}
+
+.pokemon-card:hover {
+  transform: scale(1.05);
+}
+
+.pokemon-card img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  height: 75%;
+}
+
+.pokemon-card p {
+  margin-top: 10px;
+  text-align: center;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  color: var(--primary-color);
+  font-size: var(--small-font);
+}
