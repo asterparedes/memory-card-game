@@ -60,14 +60,33 @@ body {
   grid-template-columns: repeat(4, 275px);
   gap: 10px;
   margin: 20px;
+  perspective: 1000px;
 }
 
 .pokemon-card {
+  position: relative;
   border: 1px solid var(--accent-color);
   border-radius: 10px;
   max-width: 100%;
   background-color: var(--primary-color);
+  animation: pokemon 5s ease alternate;
 }
+
+.back-pokemon-card {
+  position: absolute;
+  border: 1px solid var(--accent-color);
+  border-radius: 10px;
+  max-width: 100%;
+  background-color: var(--secondary--color);
+  /* animation: pokemon 5s ease alternate; */
+}
+
+/* @keyframes pokemon {
+  100% {
+    transform: rotateY(180deg);
+    transform-style: preserve-3d;
+  }
+} */
 
 .pokemon-card:hover {
   transform: scale(1.05);
@@ -75,10 +94,12 @@ body {
 
 .pokemon-card img {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 20px auto;
   width: 75%;
   height: 75%;
+  border: 1px solid var(--secondary--color);
+  border-radius: 10px;
+  background-color: var(--accent-color);
 }
 
 .pokemon-card p {

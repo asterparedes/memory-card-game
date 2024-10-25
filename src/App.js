@@ -1,21 +1,42 @@
 import { createElement } from "./utils";
 import ExternalData from "./ExternalData.mjs";
+import Game from "./Game.mjs";
 
 const externalData = new ExternalData();
+const game = new Game();
 
-async function PokemonCards() {
-  const pokemonList = await externalData.getPokemonData(12);
-  console.log(pokemonList);
+async function fetchPokemonDetails(id) {
+  try {
+    const pokemon = await externalData.getPokemonDetails(id);
+    return pokemon;
+  } catch (error) {
+    console.error("Error fetching:", error);
+  }
+}
+
+async function PokemonCards(selectedPokemon, updateScore) {
+  const randomIds = externalData.getRandomPokemonId(12);
   const cardContainer = createElement(
     "div",
     { className: "card-container" },
     [],
   );
 
-  for (const pokemon of pokemonList) {
-    const pokemonDetails = await externalData.getPokemonDetails(pokemon.url);
-    console.log(pokemonDetails);
-    const pokemonCard = createElement("div", { className: "pokemon-card" }, [
+  for (const id of randomIds) {
+    const pokemonDetails = await externalData.getPokemonDetails(id);
+
+    const pokemonCard = createElement("div", { className: "pokemon-card", onclick: () => {
+        const isUnique = !selectedPokemon.has(pokemonDetails.name);
+        if (isUnique) {
+          selectedPokemon.add(pokemonDetails.name);
+          game.addScore();
+        } else {
+          game.resetScore();
+          selectedPokemon.clear();
+        }
+        updateScore();
+      }
+     }, [
       createElement("img", {
         src: pokemonDetails.image,
         alt: pokemonDetails.name,
@@ -30,13 +51,21 @@ async function PokemonCards() {
 
 async function App() {
   const main = createElement("main", {}, []);
-  const pokemonCards = await PokemonCards();
+
+  const updateScore = () => {
+    document.querySelector(".current-score").textContent = `Current Score: ${game.getCurrentScore()}`;
+    document.querySelector(".high-score").textContent = `High Score: ${game.getHighScore()}`;
+  }
+
+  const pokemonCards = await PokemonCards(new Set(), updateScore);
+  const header = Header(game.getCurrentScore(), game.getHighScore());
+
   main.appendChild(pokemonCards);
 
-  return createElement("div", {}, [Header(), main, Footer()]);
+  return createElement("div", {}, [header, main, Footer()]);
 }
 
-function Header() {
+function Header(currentScore, highScore) {
   const appTitle = createElement("h1", {
     className: "app-title",
     textContent: "Pokemon Memory Card Game",
@@ -46,18 +75,18 @@ function Header() {
     textContent: "Avoid selecting the same card twice in a row",
   });
 
-  const currentScore = createElement("h2", {
+  const currentScoreElement = createElement("h2", {
     className: "current-score",
-    textContent: "Current Score: ",
+    textContent: `Current Score: ${currentScore}`,
   });
-  const highScore = createElement("h2", {
+  const highScoreElement = createElement("h2", {
     className: "high-score",
-    textContent: "High Score: ",
+    textContent: `High Score: ${highScore}`,
   });
 
   const scoreDiv = createElement("div", { className: "score" }, [
-    currentScore,
-    highScore,
+    currentScoreElement,
+    highScoreElement,
   ]);
   return createElement("header", {}, [appTitle, appInstruction, scoreDiv]);
 }
