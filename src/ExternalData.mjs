@@ -1,4 +1,4 @@
-const pokeAPIBaseUrl = "https://pokeapi.co/api/v2/pokemon/";
+const pokeAPIBaseUrl = process.env.PARCEL_API_URL;
 
 export default class ExternalData {
     async getPokemonData(limit = 12) {
