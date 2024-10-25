@@ -25,24 +25,30 @@ async function PokemonCards(selectedPokemon, updateScore) {
   for (const id of randomIds) {
     const pokemonDetails = await externalData.getPokemonDetails(id);
 
-    const pokemonCard = createElement("div", { className: "pokemon-card", onclick: () => {
-        const isUnique = !selectedPokemon.has(pokemonDetails.name);
-        if (isUnique) {
-          selectedPokemon.add(pokemonDetails.name);
-          game.addScore();
-        } else {
-          game.resetScore();
-          selectedPokemon.clear();
-        }
-        updateScore();
-      }
-     }, [
-      createElement("img", {
-        src: pokemonDetails.image,
-        alt: pokemonDetails.name,
-      }),
-      createElement("p", { textContent: pokemonDetails.name.toUpperCase() }),
-    ]);
+    const pokemonCard = createElement(
+      "div",
+      {
+        className: "pokemon-card",
+        onclick: () => {
+          const isUnique = !selectedPokemon.has(pokemonDetails.name);
+          if (isUnique) {
+            selectedPokemon.add(pokemonDetails.name);
+            game.addScore();
+          } else {
+            game.resetScore();
+            selectedPokemon.clear();
+          }
+          updateScore();
+        },
+      },
+      [
+        createElement("img", {
+          src: pokemonDetails.image,
+          alt: pokemonDetails.name,
+        }),
+        createElement("p", { textContent: pokemonDetails.name.toUpperCase() }),
+      ],
+    );
     cardContainer.appendChild(pokemonCard);
   }
 
@@ -53,9 +59,11 @@ async function App() {
   const main = createElement("main", {}, []);
 
   const updateScore = () => {
-    document.querySelector(".current-score").textContent = `Current Score: ${game.getCurrentScore()}`;
-    document.querySelector(".high-score").textContent = `High Score: ${game.getHighScore()}`;
-  }
+    document.querySelector(".current-score").textContent =
+      `Current Score: ${game.getCurrentScore()}`;
+    document.querySelector(".high-score").textContent =
+      `High Score: ${game.getHighScore()}`;
+  };
 
   const pokemonCards = await PokemonCards(new Set(), updateScore);
   const header = Header(game.getCurrentScore(), game.getHighScore());
