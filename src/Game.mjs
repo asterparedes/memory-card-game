@@ -44,4 +44,8 @@ export default class Game {
     getHighScore() {
         return this.highScore;
     }
+
+    shuffleCards(card) {
+        return card.sort(() => Math.random() - 0.5);
+    }
 }

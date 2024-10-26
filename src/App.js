@@ -4,6 +4,8 @@ import Game from "./Game.mjs";
 
 const externalData = new ExternalData();
 const game = new Game();
+let pokemonCards = [];
+let cardContainer = null;
 
 async function fetchPokemonDetails(id) {
   try {
@@ -16,7 +18,7 @@ async function fetchPokemonDetails(id) {
 
 async function PokemonCards(selectedPokemon, updateScore) {
   const randomIds = externalData.getRandomPokemonId(12);
-  const cardContainer = createElement(
+  cardContainer = createElement(
     "div",
     { className: "card-container" },
     [],
@@ -28,31 +30,80 @@ async function PokemonCards(selectedPokemon, updateScore) {
     const pokemonCard = createElement(
       "div",
       {
-        className: "pokemon-card",
-        onclick: () => {
-          const isUnique = !selectedPokemon.has(pokemonDetails.name);
-          if (isUnique) {
-            selectedPokemon.add(pokemonDetails.name);
-            game.addScore();
-          } else {
-            game.resetScore();
-            selectedPokemon.clear();
-          }
-          updateScore();
-        },
+        className: "pokemon-card front",
       },
       [
         createElement("img", {
           src: pokemonDetails.image,
           alt: pokemonDetails.name,
         }),
-        createElement("p", { textContent: pokemonDetails.name.toUpperCase() }),
+        createElement("p", {textContent: pokemonDetails.name.toUpperCase() }),
       ],
     );
-    cardContainer.appendChild(pokemonCard);
+    const backPokemonCard = createElement("div", {className: "pokemon-card back"}, [
+      createElement("img", {
+        src: "../pokeball.png",
+        alt: "Poke Ball",
+      })
+    ]);
+    backPokemonCard.setAttribute("hidden", true);
+    // backPokemonCard.removeAttribute("hidden");
+
+    const cardDiv = createElement("div", {className: "card-wrapper"}, [
+      pokemonCard,
+      backPokemonCard
+    ]);
+
+    cardDiv.onclick= () => {
+      OnClickCard();
+      cardDiv.classList.toggle("flipped");
+      const isUnique = !selectedPokemon.has(pokemonDetails.name);
+      if (isUnique) {
+        selectedPokemon.add(pokemonDetails.name);
+        game.addScore();
+      } else {
+        game.resetScore();
+        selectedPokemon.clear();
+      }
+      updateScore();
+
+      // pokemonCards = game.shuffleCards(pokemonCards);
+
+      // cardContainer.innerHTML = "";
+      // pokemonCards.forEach((card) => cardContainer.appendChild(card));
+    };
+
+    pokemonCards.push(cardDiv);
+    cardContainer.appendChild(cardDiv);
   }
 
   return cardContainer;
+}
+
+function FlipCardsToBack() {
+  for (let card of pokemonCards) {
+    card.childNodes[0].setAttribute("hidden", true);
+    card.childNodes[1].removeAttribute("hidden");
+  }
+}
+
+function FlipCardsToFront() {
+  for (let card of pokemonCards) {
+    card.childNodes[0].removeAttribute("hidden");
+    card.childNodes[1].setAttribute("hidden", true);
+  }
+}
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+async function OnClickCard() {
+  FlipCardsToBack();
+  await delay(1000);
+  pokemonCards = game.shuffleCards(pokemonCards);
+
+  cardContainer.innerHTML = "";
+  pokemonCards.forEach((card) => cardContainer.appendChild(card));
+  FlipCardsToFront();
 }
 
 async function App() {

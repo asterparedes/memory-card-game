@@ -4,7 +4,6 @@ export default class ExternalData {
     getRandomPokemonId(limit = 12) {
         const pokemonId = 150;
         const randomIds = new Set();
-        console.log(randomIds);
         
         while (randomIds.size < limit) {
             const randomId = Math.floor(Math.random() * pokemonId) + 1;
