@@ -19,7 +19,8 @@ export default class ExternalData {
         
         return {
             name: data.name,
-            image: data.sprites.other["official-artwork"].front_default,
+            image: data.sprites.front_default,
+            back_image: data.sprites.back_default,
         };
     }
 }

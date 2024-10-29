@@ -18,11 +18,7 @@ async function fetchPokemonDetails(id) {
 
 async function PokemonCards(selectedPokemon, updateScore) {
   const randomIds = externalData.getRandomPokemonId(12);
-  cardContainer = createElement(
-    "div",
-    { className: "card-container" },
-    [],
-  );
+  cardContainer = createElement("div", { className: "card-container" }, []);
 
   for (const id of randomIds) {
     const pokemonDetails = await externalData.getPokemonDetails(id);
@@ -37,24 +33,27 @@ async function PokemonCards(selectedPokemon, updateScore) {
           src: pokemonDetails.image,
           alt: pokemonDetails.name,
         }),
-        createElement("p", {textContent: pokemonDetails.name.toUpperCase() }),
+        createElement("p", { textContent: pokemonDetails.name.toUpperCase() }),
       ],
     );
-    const backPokemonCard = createElement("div", {className: "pokemon-card back"}, [
-      createElement("img", {
-        src: "../pokeball.png",
-        alt: "Poke Ball",
-      })
-    ]);
+    const backPokemonCard = createElement(
+      "div",
+      { className: "pokemon-card back" },
+      [
+        createElement("img", {
+          src: pokemonDetails.back_image,
+          alt: pokemonDetails.name,
+        }),
+      ],
+    );
     backPokemonCard.setAttribute("hidden", true);
-    // backPokemonCard.removeAttribute("hidden");
 
-    const cardDiv = createElement("div", {className: "card-wrapper"}, [
+    const cardDiv = createElement("div", { className: "card-wrapper" }, [
       pokemonCard,
-      backPokemonCard
+      backPokemonCard,
     ]);
 
-    cardDiv.onclick= () => {
+    cardDiv.onclick = () => {
       OnClickCard();
       cardDiv.classList.toggle("flipped");
       const isUnique = !selectedPokemon.has(pokemonDetails.name);
@@ -66,11 +65,6 @@ async function PokemonCards(selectedPokemon, updateScore) {
         selectedPokemon.clear();
       }
       updateScore();
-
-      // pokemonCards = game.shuffleCards(pokemonCards);
-
-      // cardContainer.innerHTML = "";
-      // pokemonCards.forEach((card) => cardContainer.appendChild(card));
     };
 
     pokemonCards.push(cardDiv);
@@ -94,7 +88,7 @@ function FlipCardsToFront() {
   }
 }
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function OnClickCard() {
   FlipCardsToBack();
