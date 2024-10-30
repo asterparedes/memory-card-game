@@ -125,7 +125,7 @@ function Header(currentScore, highScore) {
   });
   const appInstruction = createElement("p", {
     className: "app-instruction",
-    textContent: "Avoid selecting the same card twice in a row",
+    textContent: "Choose and click a card. Avoid selecting the same card twice in a row",
   });
 
   const currentScoreElement = createElement("h2", {
